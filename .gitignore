@@ -1,0 +1,29 @@
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Python cache y compilados
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Bases de datos locales
+*.sqlite3
+*.db
+
+# Archivos de entorno y claves secretas
+.env
+.env.local
+
+# IDEs y Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de SO
+.DS_Store
+Thumbs.db
