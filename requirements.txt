@@ -1,3 +1,4 @@
 Django>=4.2,<5.1
 djangorestframework>=3.14.0,<3.16.0
 pymysql>=1.2.0
+python-decouple>=3.8
