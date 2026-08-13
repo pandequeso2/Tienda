@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3!u=)j1f!bx_85!+ooyy6qf$&(^#x951pu9$seh9_t82qsv%o='
+SECRET_KEY = 'django-insecure-a+wq)4t^se52nqy48l-=bh*o3)=^3uedur(pq2cvbm^ez=6$#)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Apps del Microservicio
-    'productos',
+    'sedes',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +84,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'producto_service_db',
+        'NAME': 'sede_service_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
