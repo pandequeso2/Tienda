@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     'gateway',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,3 +139,9 @@ MICROSERVICIOS = {
     'productos': config('PRODUCTOS_URL', default='http://127.0.0.1:8002'),
     'sedes': config('SEDES_URL', default='http://127.0.0.1:8003'),
 }
+
+# Permitir que el frontend (Vue, corriendo en Vite) llame al Gateway
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
