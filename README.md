@@ -28,6 +28,6 @@ http://127.0.0.1:8080/api/sedes/
 
 
 Usuarios: http://localhost:8000/api/usuarios/
-Empleados: http://localhost:8000/api/empleados/
-Sedes: http://localhost:8000/api/sedes/
-Productos: http://localhost:8000/api/productos/
+Empleados: http://localhost:8001/api/empleados/
+Productos: http://localhost:8002/api/productos/
+Sedes: http://localhost:8003/api/sedes/
