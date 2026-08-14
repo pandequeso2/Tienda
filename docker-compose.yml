@@ -1,0 +1,132 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tienda_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - tienda_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  usuarios:
+    build:
+      context: .
+      dockerfile: Backend/Usuario/Dockerfile
+    container_name: tienda_usuarios
+    restart: unless-stopped
+    environment:
+      DB_NAME: usuario_service_db
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_HOST: mysql
+      DB_PORT: 3306
+      SECRET_KEY: ${USUARIOS_SECRET_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda_network
+
+  empleados:
+    build:
+      context: .
+      dockerfile: Backend/Empleados/Dockerfile
+    container_name: tienda_empleados
+    restart: unless-stopped
+    environment:
+      DB_NAME: empleado_service_db
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_HOST: mysql
+      DB_PORT: 3306
+      SECRET_KEY: ${EMPLEADOS_SECRET_KEY}
+    ports:
+      - "8001:8001"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda_network
+
+  productos:
+    build:
+      context: .
+      dockerfile: Backend/Productos/Dockerfile
+    container_name: tienda_productos
+    restart: unless-stopped
+    environment:
+      DB_NAME: producto_service_db
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_HOST: mysql
+      DB_PORT: 3306
+      SECRET_KEY: ${PRODUCTOS_SECRET_KEY}
+    ports:
+      - "8002:8002"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda_network
+
+  sedes:
+    build:
+      context: .
+      dockerfile: Backend/Sede/Dockerfile
+    container_name: tienda_sedes
+    restart: unless-stopped
+    environment:
+      DB_NAME: sede_service_db
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_HOST: mysql
+      DB_PORT: 3306
+      SECRET_KEY: ${SEDES_SECRET_KEY}
+    ports:
+      - "8003:8003"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda_network
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Backend/Gateway/Dockerfile
+    container_name: tienda_gateway
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: ${GATEWAY_SECRET_KEY}
+      USUARIOS_URL: http://usuarios:8000
+      EMPLEADOS_URL: http://empleados:8001
+      PRODUCTOS_URL: http://productos:8002
+      SEDES_URL: http://sedes:8003
+    ports:
+      - "8080:8080"
+    depends_on:
+      - usuarios
+      - empleados
+      - productos
+      - sedes
+    networks:
+      - tienda_network
+
+volumes:
+  mysql_data:
+
+networks:
+  tienda_network:
+    driver: bridge

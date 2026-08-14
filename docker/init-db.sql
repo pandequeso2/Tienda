@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS usuario_service_db;
+CREATE DATABASE IF NOT EXISTS empleado_service_db;
+CREATE DATABASE IF NOT EXISTS producto_service_db;
+CREATE DATABASE IF NOT EXISTS sede_service_db;
