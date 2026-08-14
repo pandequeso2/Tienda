@@ -18,6 +18,10 @@ Paso 4: python manage.py migrate
 Paso 5: python manage.py runserver 8000
 
 
+Test: python -m venv venv;venv\Scripts\activate;pip install -r ../../requirements.txt;python manage.py test 
+
+Ejecutar: python -m venv venv;venv\Scripts\activate;pip install -r ../../requirements.txt;python manage.py runserver 8000 <-- Cambiar puerto
+
 URL:
 
 Gateway:
